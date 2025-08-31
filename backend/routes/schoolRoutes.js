@@ -44,12 +44,26 @@ router.post("/", upload.single("image"), async (req, res) => {
       email_id,
     ]);
 
-    res.json({ message: "School added successfully", id: result.insertId });
+    // Return the inserted school with image URL
+    res.json({
+      message: "School added successfully",
+      school: {
+        id: result.insertId,
+        name,
+        address,
+        city,
+        state,
+        contact,
+        email_id,
+        image, // Cloudinary URL
+      },
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to add school" });
   }
 });
+
 
 // Get all schools
 router.get("/", async (req, res) => {
